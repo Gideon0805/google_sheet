@@ -21,7 +21,7 @@ function checkNameList() {
   const sheet = ss.getSheetByName("表單回應"); 
   const lastRow = sheet.getLastRow();
   const lastCol = sheet.getLastColumn();
-  const titleName = '2021ABC總動員_報名資料';
+  const titleName = '2021全員逃走FUN寒假_報名資料';
   var tempRow;
   // var rawData = sheet.getRange(lastRow, 1,1, lastCol).getValues()[0];//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維  
 
@@ -40,7 +40,7 @@ function checkNameList() {
   // 整理男女
   tempRow = nameSheet.getRange(1, 1, 1, lastCol).getValues()[0];
   var genderIndex = tempRow.indexOf('性別');
-  console.log(tempRow[genderIndex]);
+  // console.log(tempRow[genderIndex]);
   var male = nonRepeat.filter(function(item){
     return item[genderIndex] == '男'
   });
@@ -77,6 +77,7 @@ function checkNameList() {
   // 整理年級
   var lastNameRow = nameSheet.getLastRow();
   var lastNameCol = nameSheet.getLastColumn();
+
   var temp = nameSheet.getRange(2, 1, lastNameRow-1, lastNameCol).getValues();
   temp.sort(sortFunction); 
   // === 填入整理過年級的名單 ===
@@ -98,13 +99,12 @@ function checkNameList() {
   // Border
   nameSheet.getRange(1, 1, 1, endCol).setBorder(true, true, true, true, null, null);//top, left, bottom, right, vertical, horizontal
   // 填入顏色
-  nameSheet.getRange(1, 1, 1, endCol).setBackground('#FFD000');// 第一列
+  nameSheet.getRange(1, 1, 1, endCol).setBackground('#94EDFF');// 第一列
   // 合併第一列
   nameSheet.getRange(1, 1, 1, endCol).merge();
 
 
 }
-
 /*
 function checkLast() {
   // 存取工作表(ByName) https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getsheetbynamename

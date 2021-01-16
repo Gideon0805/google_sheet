@@ -17,7 +17,7 @@ function checkRemittance() {
   const lastRow = sheet.getLastRow();
   const lastCol = sheet.getLastColumn();
   const startRow = 3;
-  const titleName = '110年1/28-29 國小ABC總動員_保險';
+  const titleName = '110年1/25-26 國中全員逃走FUN寒假_保險';
 
   const rawData = sheet.getRange(startRow, 2, lastRow-1, lastCol).getValues();//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維
   //2019/6/10 下午 8:54:29
@@ -71,7 +71,7 @@ function checkRemittance() {
   // Border
   insurance.getRange(1, 1, remittResult.length+2, validRange).setBorder(true, true, true, true, true, true);//top, left, bottom, right, vertical, horizontal
   // 填入顏色
-  insurance.getRange(1, 1, 1, validRange).setBackground('#FFD000');// 第一列
+  insurance.getRange(1, 1, 1, validRange).setBackground('#94EDFF');// 第一列
   // 合併第一列
   insurance.getRange(1, 1, 1, validRange).merge();
 
