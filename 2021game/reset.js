@@ -12,7 +12,7 @@ function resetFunction() {
   for (var key in sheetByName) {
     let index = sheetByName[key];
     tempSheet = ss.getSheetByName(index[0]);
-    let content = [['名稱', index[0]], ['積分', 0], ['行動數', 0]];
+    let content = [['名稱', key], ['積分', 0], ['行動數', 0]];
     tempSheet.getRange(1, index[1], 3, 2).setValues(content);
   }
 
@@ -21,6 +21,7 @@ function resetFunction() {
     let tag = '積分 動作';
     let tempSS = SpreadsheetApp.openByUrl(tempUrl);
     let tempSheet = tempSS.getSheetByName(tag);
+    tempSheet.clear();
     let content = [['名稱', key], ['積分', 0], ['行動數', 0]];
     tempSheet.getRange(1, 1, 3, 2).setValues(content);
   }

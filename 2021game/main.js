@@ -5,6 +5,7 @@ const activeEffectT = new Map([
                     ['辛苦站立的侍衛卡', 400], ['辛勤耕田的農夫卡', 400],
                     ['豺狼的圍攻卡', 200], ['積分獵手卡', 400],
                     ['面罩糾察卡', 400], ['勝利之劍', 50]
+
     ]);
 // 被動方效果成功
 const passiveEffectT = new Map([
@@ -25,9 +26,11 @@ const passiveEffectF = new Map([
                     ['辛苦站立的侍衛卡', 0], ['辛勤耕田的農夫卡', 0],
                     ['積分獵手卡', 0], ['面罩糾察卡', 0]
     ]);
-const comboEffect = new Map([
-                    ['倍增卡', 2], ['羅馬大盾', 0.95],
-                    ['振金之盾', 0.5]
+const attackEffect = new Map([
+                   ['倍增卡', 2]
+    ]);
+const defenseEffect = new Map([
+                    ['羅馬大盾', 0.95], ['振金之盾', 0.5]
     ]);
 const sheetByName = {
                   爵士: ['大會', 1],
@@ -66,42 +69,23 @@ const outputUrl = {
 
 
 function mainFunction() {
-  // 存取工作表(ByName) https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getsheetbynamename
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  //獲取“報到”的最新一筆資料
-  var sheet = ss.getSheetByName("表單回應 1"); 
-  var lastrow = sheet.getLastRow();
-  var lastcol = sheet.getLastColumn();
-  var rawData = sheet.getRange(lastrow, 1,1, lastcol).getValues()[0];//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維
-  // console.log(rawData)
-  if (rawData[1]=='交易') {
-    var updateContent = tradeFun(ss, rawData);
-  }
+    // 存取工作表(ByName) https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getsheetbynamename
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    //獲取“報到”的最新一筆資料
+    var sheet = ss.getSheetByName("表單回應 1"); 
+    var lastrow = sheet.getLastRow();
+    var lastcol = sheet.getLastColumn();
+    var rawData = sheet.getRange(lastrow, 1,1, lastcol).getValues()[0];//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維
+    // console.log(rawData)
+    if (rawData[1]=='交易') {
+        tradeFunction(ss, rawData);
+    }
+    else{
+        actFunction(ss, rawData);
+    }
 }
 
-function DataProcess() {
-  //2019/6/10 下午 8:54:29
-  //var date = getDate("2019/6/10 下午 8:54:29");
-  
-  // 欲填入保險表格
-  var insurance = ss.getSheetByName("保險");
-  var in_row = insurance.getLastRow();
-  // var lastcol = insurance.getLastColumn();
-  // 保險欄位
-  var data_nums = 6;
-  var data_start = 1;
-  for (var i = data_start; i <= data_nums; i++) {
-    var temp = rawData[i];
-    insurance.getRange(in_row+1, i).setValue(temp);
-    // console.log(temp);
-  }
-  // var summary = 0;
-  // var summary = new Array(DataString); // 回傳
-  // return summary; 
-  
-}
-
-function tradeFun(ss, tradeRec){
+function tradeFunction(ss, tradeRec){
     var seller = tradeRec[2];
     var sIndex = sheetByName[seller];
     var buyer = tradeRec[7];
@@ -160,8 +144,129 @@ function tradeFun(ss, tradeRec){
         tempSheet.clear();
         tempSheet.getRange(1, 1, 3+bAction, 2).setValues(tempContent);
     }
+}
 
+function actFunction(ss, actRec){
+    var attacker = actRec[9];
+    var aIndex = sheetByName[attacker];
+    var defender = actRec[13];
+    var dIndex = sheetByName[defender];
+    var flag = false;
+    if (actRec[17] == '是'){
+        flag = true;
+    }
+    var aCards = ''; 
+    for (var i = 10; i <= 12; i++) {
+        if (actRec[i]) {
+            aCards = aCards + actRec[i] + ',';
+        }
+    }
+    var dCards = ''; 
+    for (var i = 14; i <= 16; i++) {
+        if (actRec[i]) {
+            dCards = dCards + actRec[i] + ',';
+        }
+    }
+    var getPoints = 0;
+    var hitPoints = 0;
+    [getPoints, hitPoints] = actPoint(aCards, dCards, flag);
 
+// spreadSheet, teamIndex, points, actString, timeString
+    // 填入行動
+    var timeString = formatDate(actRec[0]);
+    var actString = attacker + ' 向 ' + defender + ' \n發動 ' + aCards;
+    if (flag) {
+        actString = '成功：' + actString;
+    }
+    else{
+        actString = '失敗：' + actString;        
+    }
+
+    var actionNums = updateACT(ss, aIndex, getPoints, actString, timeString);
+    actionNums = updateACT(ss, dIndex, hitPoints, actString, timeString);
+
+    // 更新輸出表單
+    // 攻方
+    let tempUrl = outputUrl[attacker];
+    let tag = '積分 動作';
+    let tempSS = SpreadsheetApp.openByUrl(tempUrl);
+    let tempSheet = tempSS.getSheetByName(tag);
+    let tempContent = ss.getSheetByName(aIndex[0]).getRange(1, aIndex[1], 3+actionNums, 2).getValues();
+    tempSheet.clear();
+    tempSheet.getRange(1, 1, 3+actionNums, 2).setValues(tempContent);
+
+    // 守方
+    tempUrl = outputUrl[defender];
+    tag = '積分 動作';
+    tempSS = SpreadsheetApp.openByUrl(tempUrl);
+    tempSheet = tempSS.getSheetByName(tag);
+    tempContent = ss.getSheetByName(dIndex[0]).getRange(1, dIndex[1], 3+actionNums, 2).getValues();
+    tempSheet.clear();
+    tempSheet.getRange(1, 1, 3+actionNums, 2).setValues(tempContent);
+
+}
+
+// activeEffectT, activeEffectF
+// passiveEffectT, passiveEffectF
+function actPoint(attacks, defenses, flag){
+    var atkList = attacks.split(',');
+    var defList = defenses.split(',');
+    var earn = 0;
+    var hit = 0;
+    var defFactor = 1;
+    var atkFactor = 1;
+    var card ='';
+    for (var i in defList) {
+        card = defList[i].trim();
+        if (defenseEffect.has(card)) {
+            defFactor = defFactor * defenseEffect.get(card);
+        }
+    }
+    for (var i in atkList) {
+        card = atkList[i].trim();
+        if (attackEffect.has(card)) {
+            atkFactor = atkFactor * attackEffect.get(card);
+        }
+    }
+    if (flag) {
+        for (var i in atkList) {
+            card = atkList[i].trim();
+            if (activeEffectT.has(card)) {
+                earn = earn + activeEffectT.get(card);
+            }
+            if (passiveEffectT.has(card)) {
+                hit = hit + passiveEffectT.get(card);
+            }
+        }
+    }
+    else{
+        for (var i in atkList) {
+            card = atkList[i].trim();
+            if (activeEffectF) {
+                earn = earn + activeEffectF.get(card);
+                hit = hit + passiveEffectF.get(card);
+            }
+        }        
+    }
+    hit = hit * defFactor * atkFactor;
+    return [earn, hit];
+}
+
+function updateACT(spreadSheet, teamIndex, points, actString, timeString){
+    var updateSheet = spreadSheet.getSheetByName(teamIndex[0]);
+    // 獲取表格資料
+    // content = [[ '名稱', '大會' ], [ '積分', 0 ], [ '行動數', 0 ]]
+    var content = updateSheet.getRange(1, teamIndex[1], 3, 2).getValues();
+    // 買賣積分與行動數更新
+    var total = content[1][1] + points;
+    var actions = content[2][1] + 1; // 行動數加一
+    content[1][1] = total;
+    content[2][1] = actions;
+    // 回填回表單
+    updateSheet.getRange(1, teamIndex[1], 3, 2).setValues(content);
+    // 填入行動
+    updateSheet.getRange(3+actions, teamIndex[1], 1, 2).setValues([[timeString, actString]]);
+    return actions;
 }
 
 function formatDate(now) { 
@@ -173,50 +278,3 @@ function formatDate(now) {
 　　var second=now.getSeconds(); 
 　　return month+"/"+date+" "+hour+":"+minute+":"+second; 
 } 
-
-/*
-'流氓卡'
-'肌肉人卡'
-'至尊神卡'
-
-'辛苦站立的侍衛卡'
-'辛勤耕田的農夫卡'
-'豺狼的圍攻卡'
-'積分獵手卡'
-'面罩糾察卡'
-
-'逆刃刀'
-'勝利之劍'
-'羅馬大盾'
-'振金之盾'
-
-
-
-流氓卡
-肌肉人卡
-強盜卡
-狂暴卡
-至尊神卡
-金牌特務卡
-守護者卡
-
-下課鐘聲卡
-傳奇三連抽
-束脩卡
-時間暫停卡
-增值卡
-辛苦站立的侍衛卡
-辛勤耕田的農夫卡
-絕對先手卡
-豺狼的圍攻卡
-隱形卡
-田裡的稻草人卡
-浴火重生卡
-積分獵手卡
-面罩糾察卡
-
-逆刃刀
-勝利之劍
-戰術求生斧
-羅馬大盾
-振金之盾*/
