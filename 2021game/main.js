@@ -1,4 +1,3 @@
-
 // 發動方效果成功
 const activeEffectT = new Map([
                     ['流氓卡', 800], ['肌肉人卡', 800],
@@ -35,36 +34,36 @@ const defenseEffect = new Map([
 const sheetByName = {
                   爵士: ['大會', 1],
                   交易市集: ['大會', 4],
-                  白傑睿第一分隊: ['白傑睿', 1],
-                  白傑睿第二分隊: ['白傑睿', 4],
-                  白傑睿第三分隊: ['白傑睿', 7],
-                  白傑睿第四分隊: ['白傑睿', 10],
-                  紅麥克第一分隊: ['紅麥克', 1],
-                  紅麥克第二分隊: ['紅麥克', 4],
-                  紅麥克第三分隊: ['紅麥克', 7],
-                  紅麥克第四分隊: ['紅麥克', 10]
+                  白傑睿一: ['白傑睿', 1],
+                  白傑睿二: ['白傑睿', 4],
+                  白傑睿三: ['白傑睿', 7],
+                  白傑睿四: ['白傑睿', 10],
+                  紅麥克一: ['紅麥克', 1],
+                  紅麥克二: ['紅麥克', 4],
+                  紅麥克三: ['紅麥克', 7],
+                  紅麥克四: ['紅麥克', 10]
     }; // 後面的數字為在分頁中的起始欄位
 // const sheetByName = new Map([
 //                 ['爵士', '大會'],
-//                 ['白傑睿第一分隊', '白傑睿'],
-//                 ['白傑睿第二分隊', '白傑睿'],
-//                 ['白傑睿第三分隊', '白傑睿'],
-//                 ['白傑睿第四分隊', '白傑睿'],
-//                 ['紅麥克第一分隊', '紅麥克'],
-//                 ['紅麥克第二分隊', '紅麥克'],
-//                 ['紅麥克第三分隊', '紅麥克'],
-//                 ['紅麥克第四分隊', '紅麥克']
+//                 ['白傑睿一', '白傑睿'],
+//                 ['白傑睿二', '白傑睿'],
+//                 ['白傑睿三', '白傑睿'],
+//                 ['白傑睿四', '白傑睿'],
+//                 ['紅麥克一', '紅麥克'],
+//                 ['紅麥克二', '紅麥克'],
+//                 ['紅麥克三', '紅麥克'],
+//                 ['紅麥克四', '紅麥克']
 //     ]);
 
 const outputUrl = {
-                白傑睿第一分隊: 'https://docs.google.com/spreadsheets/d/1LO1aZn3ne-x89BLezNOugfnl2vNuTmpg3_nuHSWjb0E/edit#gid=0',
-                白傑睿第二分隊: 'https://docs.google.com/spreadsheets/d/1v1rkI1yipurRm3ibLiWgPG-e32Hw_dFM4ueAdUgMEZ8/edit#gid=0',
-                白傑睿第三分隊: 'https://docs.google.com/spreadsheets/d/1c5x1ne7TOuGhQa9E2voWbAR80edtPdIZzrdXV20Pcn4/edit#gid=0',
-                白傑睿第四分隊: 'https://docs.google.com/spreadsheets/d/1vfNMHeqdQxhVN1Su_d6YhAX26iCshGCMkRwEuwlMWOs/edit#gid=0',
-                紅麥克第一分隊: 'https://docs.google.com/spreadsheets/d/1hM-DdBPyMAxTfHHLslt28B-2sKE_Smk1mSUiVLemOKs/edit#gid=0',
-                紅麥克第二分隊: 'https://docs.google.com/spreadsheets/d/1PUasKvXIZKKPtGwx2vRwNDHZRKzR5wk-Z61lkEegwHg/edit#gid=0',
-                紅麥克第三分隊: 'https://docs.google.com/spreadsheets/d/1zE_y6txsYE8hU6fxfrnHp8IQANWAgrM6rO2B5cJ1BRQ/edit#gid=0',
-                紅麥克第四分隊: 'https://docs.google.com/spreadsheets/d/13KVHMb6Us2H84LQV8b1zv_XxAUJm8FDbVnymDZB-rqw/edit#gid=0'
+                白傑睿一: 'https://docs.google.com/spreadsheets/d/1LO1aZn3ne-x89BLezNOugfnl2vNuTmpg3_nuHSWjb0E/edit#gid=0',
+                白傑睿二: 'https://docs.google.com/spreadsheets/d/1v1rkI1yipurRm3ibLiWgPG-e32Hw_dFM4ueAdUgMEZ8/edit#gid=0',
+                白傑睿三: 'https://docs.google.com/spreadsheets/d/1c5x1ne7TOuGhQa9E2voWbAR80edtPdIZzrdXV20Pcn4/edit#gid=0',
+                白傑睿四: 'https://docs.google.com/spreadsheets/d/1vfNMHeqdQxhVN1Su_d6YhAX26iCshGCMkRwEuwlMWOs/edit#gid=0',
+                紅麥克一: 'https://docs.google.com/spreadsheets/d/1hM-DdBPyMAxTfHHLslt28B-2sKE_Smk1mSUiVLemOKs/edit#gid=0',
+                紅麥克二: 'https://docs.google.com/spreadsheets/d/1PUasKvXIZKKPtGwx2vRwNDHZRKzR5wk-Z61lkEegwHg/edit#gid=0',
+                紅麥克三: 'https://docs.google.com/spreadsheets/d/1zE_y6txsYE8hU6fxfrnHp8IQANWAgrM6rO2B5cJ1BRQ/edit#gid=0',
+                紅麥克四: 'https://docs.google.com/spreadsheets/d/13KVHMb6Us2H84LQV8b1zv_XxAUJm8FDbVnymDZB-rqw/edit#gid=0'
     };
 
 
@@ -83,6 +82,14 @@ function mainFunction() {
     else{
         actFunction(ss, rawData);
     }
+
+    var result = ss.getSheetByName("大會");
+    var temp = ss.getSheetByName("白傑睿");
+    var tempContent = temp.getRange(1, 1, 2, 11).getValues();
+    result.getRange(1, 1, 2, 11).setValues(tempContent);
+    temp = ss.getSheetByName("紅麥克");
+    tempContent = temp.getRange(1, 1, 2, 11).getValues();
+    result.getRange(3, 1, 2, 11).setValues(tempContent);
 }
 
 function tradeFunction(ss, tradeRec){
@@ -90,6 +97,9 @@ function tradeFunction(ss, tradeRec){
     var sIndex = sheetByName[seller];
     var buyer = tradeRec[7];
     var bIndex = sheetByName[buyer];
+    if (seller == buyer){
+        return false;
+    }
     var salePoint = tradeRec[6];
     var buyPoint = tradeRec[8]
     var items = ''; 
@@ -100,28 +110,55 @@ function tradeFunction(ss, tradeRec){
     }
     var sSheet = ss.getSheetByName(sIndex[0]);
     var bSheet = ss.getSheetByName(bIndex[0]);
+
     // 獲取買賣方表格資料 s: Seller, b: Buyer
     // content = [[ '名稱', '大會' ], [ '積分', 0 ], [ '行動數', 0 ]]
     var sContent = sSheet.getRange(1, sIndex[1], 3, 2).getValues();
     var bContent = bSheet.getRange(1, bIndex[1], 3, 2).getValues();
-    // 買賣積分與行動數更新
+    if (bIndex[0] == '大會'){
+        bContent[1][1] = 10000000;
+        bContent[2][1] = 0;
+    }
+    if (sIndex[0] == '大會'){
+        sContent[1][1] = 10000000;
+        sContent[2][1] = 0;
+    }
+    // 買賣積分更新
     var sTotal = buyPoint + sContent[1][1] - salePoint;
     sContent[1][1] = sTotal;
     var bTotal = salePoint + bContent[1][1] - buyPoint;
     bContent[1][1] = bTotal;
+    // 判斷交易失敗
+    if (bTotal < 0 || sTotal<0){return false;}
+
+    // 行動數更新
     var sAction = sContent[2][1] + 1; // 行動數加一
-    var bAction = bContent[2][1] + 1; // 行動數加一
     sContent[2][1] = sAction;
+    var bAction = bContent[2][1] + 1; // 行動數加一
     bContent[2][1] = bAction;
-    // 回填回表單
-    sSheet.getRange(1, sIndex[1], 3, 2).setValues(sContent);
-    bSheet.getRange(1, bIndex[1], 3, 2).setValues(bContent);
-    // 填入行動
-    var timeString = formatDate(tradeRec[0]);
-    var sActString = '賣' + items + '給' + buyer;
-    sSheet.getRange(3+sAction, sIndex[1], 1, 2).setValues([[timeString, sActString]]);
-    var bActString = '向' + seller + '買入' + items; 
-    bSheet.getRange(3+bAction, bIndex[1], 1, 2).setValues([[timeString, bActString]]);
+
+    if (sIndex[0] !== '大會'){
+        // 回填回表單
+        sSheet.getRange(1, sIndex[1], 3, 2).setValues(sContent);
+        // 填入行動
+        let timeString = formatDate(tradeRec[0]);
+        let sActString = '賣' + items + '給' + buyer;
+        sSheet.getRange(3+sAction, sIndex[1], 1, 2).setValues([[timeString, sActString]]);
+    }
+
+    if (bIndex[0] !== '大會'){
+        // 回填回表單
+        bSheet.getRange(1, bIndex[1], 3, 2).setValues(bContent);
+        // 填入行動
+        let timeString = formatDate(tradeRec[0]);
+        let bActString = '向' + seller + '買入' + items; 
+        if (items==''){
+            if (salePoint >= buyPoint) { bActString = '獲得' + salePoint + '分';}
+            else {bActString = '扣' + buyPoint + '分';}
+            
+        }
+        bSheet.getRange(3+bAction, bIndex[1], 1, 2).setValues([[timeString, bActString]]);
+    }
 
     // 更新輸出表單
     // 賣方
@@ -140,7 +177,7 @@ function tradeFunction(ss, tradeRec){
         let tag = '積分 動作';
         let tempSS = SpreadsheetApp.openByUrl(tempUrl);
         let tempSheet = tempSS.getSheetByName(tag);
-        let tempContent = bSheet.getRange(1, bIndex[1], 3+sAction, 2).getValues();        
+        let tempContent = bSheet.getRange(1, bIndex[1], 3+bAction, 2).getValues();        
         tempSheet.clear();
         tempSheet.getRange(1, 1, 3+bAction, 2).setValues(tempContent);
     }
@@ -151,6 +188,9 @@ function actFunction(ss, actRec){
     var aIndex = sheetByName[attacker];
     var defender = actRec[13];
     var dIndex = sheetByName[defender];
+    if (attacker == defender){
+        return false;
+    }
     var flag = false;
     if (actRec[17] == '是'){
         flag = true;
@@ -242,7 +282,7 @@ function actPoint(attacks, defenses, flag){
     else{
         for (var i in atkList) {
             card = atkList[i].trim();
-            if (activeEffectF) {
+            if (activeEffectF.has(card)) {
                 earn = earn + activeEffectF.get(card);
                 hit = hit + passiveEffectF.get(card);
             }
