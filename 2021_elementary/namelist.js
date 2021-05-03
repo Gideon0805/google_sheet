@@ -21,7 +21,7 @@ function checkNameList() {
   const sheet = ss.getSheetByName("表單回應"); 
   const lastRow = sheet.getLastRow();
   const lastCol = sheet.getLastColumn();
-  const titleName = '2021ABC總動員_報名資料';
+  const titleName = '2021 Super Star 國小雙語營_報名資料';
   var tempRow;
   // var rawData = sheet.getRange(lastRow, 1,1, lastCol).getValues()[0];//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維  
 
@@ -50,8 +50,12 @@ function checkNameList() {
   
   // === 填入無重複且整理完的男女名單 ===
   // nameSheet.getRange(2, 1, nonRepeat.length, lastCol-1).setValues(nonRepeat);
-  nameSheet.getRange(2, 1, male.length, lastCol-1).setValues(male);
-  nameSheet.getRange(male.length+2, 1, female.length, lastCol-1).setValues(female);
+  if (male.length != 0) {
+    nameSheet.getRange(2, 1, male.length, lastCol-1).setValues(male);
+  }
+  if (female.length != 0) {
+    nameSheet.getRange(male.length+2, 1, female.length, lastCol-1).setValues(female);
+  }
 
 
 
@@ -61,6 +65,7 @@ function checkNameList() {
   // 找出年級的欄位 index
   tempRow = nameSheet.getRange(1, 1, 1, lastCol).getValues()[0];
   var classIndex = tempRow.indexOf('年級') + 1; // array index begin is 0;
+  if (classIndex == 0) {classIndex = 8}
   var classCol = nameSheet.getRange(2, classIndex, nonRepeat.length, 1).getValues();//(start row, start col, row num, col num)
   var gradeCol = classCol;
   // 班級轉年級
@@ -121,7 +126,7 @@ function checkLast() {
   var rowNums = nameSheet.getLastRow();
   var colNums = nameSheet.getLastColumn();
   var nameList = nameSheet.getRange(2, 1, rowNums-1, lastCol).getValues();
-  const titleName = '2021全員逃走FUN寒假_報名資料';
+  const titleName = '2021全員逆轉—學院之戰(國中)_報名資料';
 
   // ==== 判斷是否存在
   var insert = true;

@@ -15,7 +15,7 @@ function checkSummary() {
   const lastRow = nameSheet.getLastRow() - 1;
   const lastCol = nameSheet.getLastColumn();
   const startRow = 3; //抓資料的起始列
-  const titleName = '國小ABC總動員人數統計（含桂冠）';
+  const titleName = 'Super Star 國小雙語營人數統計（含桂冠）';
 
   const rawData = nameSheet.getRange(startRow, 1, lastRow-1, lastCol-1).getValues();
   // titleRow 來找陣列的index;

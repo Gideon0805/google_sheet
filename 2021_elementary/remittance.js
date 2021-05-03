@@ -17,7 +17,7 @@ function checkRemittance() {
   const lastRow = sheet.getLastRow();
   const lastCol = sheet.getLastColumn();
   const startRow = 3;
-  const titleName = '110年1/28-29 國小ABC總動員_保險';
+  const titleName = '110年7/15-16 Super Star 國小雙語營_保險';
 
   const rawData = sheet.getRange(startRow, 2, lastRow-1, lastCol).getValues();//(start row, start col, row num, col num)//二維矩陣 取[0] 轉一維
   //2019/6/10 下午 8:54:29
